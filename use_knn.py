@@ -3,53 +3,25 @@ import numpy as np
 from sklearn.neighbors import KNeighborsClassifier
 from sklearn.model_selection import train_test_split
 from sklearn.metrics import accuracy_score, confusion_matrix
-import pyfiglet
 
-print("loading diabetes data set....")
+def train_knn_model(features, labels):
+    feature_train, feature_test, label_train, label_test = train_test_split(features, labels, test_size=0.25, random_state=42)
 
-df = pd.read_csv('diabetes.csv')
+    knn = KNeighborsClassifier(n_neighbors = 3)
 
-print("creating knn model....")
+    knn.fit(feature_train, label_train)
 
-features = df.drop('Outcome', axis=1).values
-labels = df['Outcome'].values
+    print("knn model created!")
 
-feature_train, feature_test, label_train, label_test = train_test_split(features, labels, test_size=0.25, random_state=42)
+    print("running test...")
 
-knn = KNeighborsClassifier(n_neighbors=3)
+    label_pred = knn.predict(feature_test)
+    cm = confusion_matrix(label_test, label_pred)
+    print((f"Confusion matix:\n  {cm}"))
+    accuracy = accuracy_score(label_test, label_pred)
+    print(f"Test accuracy: {(accuracy * 100):.2f}%")
 
-knn.fit(feature_train, label_train)
+    return knn
 
-print("knn model created!")
-
-print("running test...")
-
-label_pred = knn.predict(feature_test)
-cm = confusion_matrix(label_test, label_pred)
-print((f"Confusion matix:\n  {cm}"))
-accuracy = accuracy_score(label_test, label_pred)
-print(f"Test accuracy: {(accuracy * 100):.2f}%")
-
-
-print(pyfiglet.figlet_format("DIABETES PREDICTOR", font="small"))
-
-def take_input():
-    print("Enter the following values:")
-    Pregnancies = int(input("Pregnancies: "))
-    Glucose = float(input("Glucose: "))
-    BloodPressure = float(input("BloodPressure: "))
-    SkinThickness = float(input("SkinThickness: "))
-    Insulin = float(input("Insulin: "))
-    BMI = float(input("BMI: "))
-    DiabetesPedigreeFunction = float(input("DiabetesPedigreeFunction: "))
-    Age = int(input("Age: "))
-    return np.array([Pregnancies, Glucose, BloodPressure, SkinThickness, Insulin, BMI, DiabetesPedigreeFunction, Age]).reshape(1, -1)
-
-user_input = take_input()
-
-user_prediction = knn.predict(user_input)
-
-if user_prediction[0] == 1:
-    print("Diabetes Positive")
-else:
-    print("Diabetes Negative")
+def predict_with_knn(model, user_input):
+    return model.predict(user_input)
