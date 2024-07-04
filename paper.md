@@ -1,3 +1,4 @@
+
 # Comparative Analysis of KNN, ID3, and Naive Bayes for Diabetes Prediction
 
 ## Abstract
@@ -32,9 +33,17 @@ The dataset used in this study is the Pima Indians Diabetes Database, which cont
 
 The performance of the algorithms is evaluated using the following metrics:
 - **Accuracy**: The proportion of correctly classified instances.
+\[ \text{Accuracy} = \frac{TP + TN}{TP + TN + FP + FN} \]
+
 - **Precision**: The proportion of true positive instances among the predicted positives.
+\[ \text{Precision} = \frac{TP}{TP + FP} \]
+
 - **Recall**: The proportion of true positive instances among the actual positives.
+\[ \text{Recall} = \frac{TP}{TP + FN} \]
+
 - **F1 Score**: The harmonic mean of precision and recall.
+\[ \text{F1 Score} = 2 \times \frac{\text{Precision} \times \text{Recall}}{\text{Precision} + \text{Recall}} \]
+
 - **Confusion Matrix**: A table used to describe the performance of a classification model.
 
 ## 4. Results and Discussion
